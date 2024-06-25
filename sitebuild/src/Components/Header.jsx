@@ -1,4 +1,4 @@
-import './App.css'; 
+import "./App.css";
 
 const Header = () => {
   return (
@@ -10,4 +10,3 @@ const Header = () => {
 };
 
 export default Header;
-

@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaArrowRight } from 'react-icons/fa';
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { FaArrowRight } from "react-icons/fa";
 
 const Home = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/rooms')
-      .then(response => response.json())
-      .then(data => {
+    fetch("/api/rooms")
+      .then((response) => response.json())
+      .then((data) => {
         setRooms(data.rooms);
         setLoading(false);
       });
@@ -28,8 +28,12 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center mt-10">
       <div className="max-w-lg w-full p-4 bg-brown shadow-md rounded-lg">
-        {rooms.map(room => (
-          <Link key={room.id} to={`/rooms/${room.id}`} className="block p-4 border border-black-300 my-2 grid items-center hover:bg-gray-100 transition-colors duration-300">
+        {rooms.map((room) => (
+          <Link
+            key={room.id}
+            to={`/rooms/${room.id}`}
+            className="block p-4 border border-black-300 my-2 grid items-center hover:bg-gray-100 transition-colors duration-300"
+          >
             <span className="text-lg">{room.name}</span>
             <FaArrowRight className="text-xl" />
           </Link>

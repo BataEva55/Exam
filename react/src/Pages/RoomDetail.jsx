@@ -1,25 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 const RoomDetails = () => {
   const { id } = useParams();
   const [furnitures, setFurnitures] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [weightFilter, setWeightFilter] = useState('');
-  const [priceFilter, setPriceFilter] = useState('');
+  const [weightFilter, setWeightFilter] = useState("");
+  const [priceFilter, setPriceFilter] = useState("");
 
   useEffect(() => {
     fetch(`/api/rooms/${id}/furnitures`)
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setFurnitures(data.furnitures);
         setLoading(false);
       });
   }, [id]);
 
-  const filteredFurnitures = furnitures.filter(furniture => {
-    const weightMatch = weightFilter === '' || parseInt(weightFilter) === furniture.weight;
-    const priceMatch = priceFilter === '' || parseInt(priceFilter) === furniture.price;
+  const filteredFurnitures = furnitures.filter((furniture) => {
+    const weightMatch =
+      weightFilter === "" || parseInt(weightFilter) === furniture.weight;
+    const priceMatch =
+      priceFilter === "" || parseInt(priceFilter) === furniture.price;
     return weightMatch && priceMatch;
   });
 
@@ -64,16 +66,20 @@ const RoomDetails = () => {
           </thead>
           <tbody>
             {filteredFurnitures.length > 0 ? (
-              filteredFurnitures.map(furniture => (
+              filteredFurnitures.map((furniture) => (
                 <tr key={furniture.id}>
                   <td className="border p-2">{furniture.name}</td>
                   <td className="border p-2">{furniture.weight} kg</td>
-                  <td className="border p-2">${furniture.price.toFixed(2)} USD</td>
+                  <td className="border p-2">
+                    ${furniture.price.toFixed(2)} USD
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td className="border p-2 text-center" colSpan="3">No matching furniture found.</td>
+                <td className="border p-2 text-center" colSpan="3">
+                  No matching furniture found.
+                </td>
               </tr>
             )}
           </tbody>
