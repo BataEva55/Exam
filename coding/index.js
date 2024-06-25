@@ -13,7 +13,29 @@ Each object should have:
 value: the common element.
 indexSum: the sum of the indices of this element in both arrays.
 */
-export function twistedArrayIntersection(arr1, arr2) {}
+export function twistedArrayIntersection(arr1, arr2) {
+    const intersection = [];
+    const seenInArr1 = {};
+  
+    for (let i = 0; i < arr1.length; i++) {
+      const element = arr1[i];
+      if (!(element in seenInArr1)) {
+        seenInArr1[element] = i;
+      }
+    }
+  
+    for (let j = 0; j < arr2.length; j++) {
+      const element = arr2[j];
+      if (element in seenInArr1) {
+        const index1 = seenInArr1[element];
+        intersection.push({ value: element, indexSum: index1 + j });
+        seenInArr1[element] = -1;
+      }
+    }
+  
+    return intersection;
+  }
+  
 
 
 /*
@@ -32,4 +54,20 @@ The initial balance is 0.
 If a withdrawal causes the balance to go below zero, the transaction should be ignored,
 and the function should continue processing the remaining transactions.
 */
-export function processTransactions(transactions) {}
+export function processTransactions(transactions) {
+    let balance = 0;
+  
+    for (let i = 0; i < transactions.length; i++) {
+      const transaction = transactions[i];
+  
+      if (transaction.type === "deposit") {
+        balance += transaction.amount;
+      } else if (transaction.type === "withdrawal") {
+        if (balance >= transaction.amount) {
+          balance -= transaction.amount;
+        }
+      }
+    }
+  
+    return balance;
+  }
